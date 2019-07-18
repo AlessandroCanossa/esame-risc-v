@@ -35,7 +35,7 @@ _start:
 
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
     
-     # carico gli indirizzi degli array relativi alla matrice A
+     # carico gli indirizzi degli array relativi alla matrice B
     la      a0, matrixB
     la      a1, sparseB
     

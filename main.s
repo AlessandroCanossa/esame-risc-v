@@ -1,30 +1,56 @@
+.include "loadMatrix.s"
+.include "transpose.s"
 .global _start
 
-.section .rodata
-    matrixA: .byte 0,0,0,0,
-                   0,0,0,0,
-                   0,0,1,0
-
-    matrixB: .byte 0,0,0,0,
-                   0,0,0,0,
-                   0,0,0,0
-
-    nElem: .byte 4          #numero colonne
-
 .section .data
-    rowA: .space 1
-    colA: .space 1
+    matrixA: .byte 0,10,0,12,0,0,0,0,0,0,5,0,15,12,0,0
+
+    matrixB: .byte 0,0,8,0,0,0,0,23,0,0,9,0,20,25,0,0
+
+    nColA: .byte 4         # numero colonne A
+    nRowA: .byte 4         # numero righe A
+    
+    nColB: .byte 4         # numero colonne B
+    nRowB: .byte 4         # numero righe B
+
+    
+    # creiamo gli array relativi alla colonna, riga e valore
+    # di dimensione pari al numero di elementi diversi da zero
+    # [da inserire a tempo di scrittura]
+
+    sparseA: .space 15        
 
 
+    sparseB: .space 15
 
 .section .text
+
 _start:
-    la a0, rowA
-    la a1, colA
+    # carico gli indirizzi degli array relativi alla matrice A
+    la      a0, matrixA
 
-    li a0, 9
+    # carico il numero di elementi di righe e colonne
+    lb      t2, nColA
+    lb      t4, nRowA
+
+    la      a1, sparseA
+
+    jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
+    
+    # carico gli indirizzi degli array relativi alla matrice B
+    la      a0, matrixB
+
+    # carico il numero di elementi di righe e colonne
+    lb      t2, nColB
+    lb      t4, nRowB
+
+    jal     ra, transpose   # calcolo la trasposta di matrixB
+
+    la      a1, sparseB
+    
+    jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
 
 
-    li a3, 93
+    li      a7, 93
     ecall   
     

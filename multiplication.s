@@ -13,7 +13,7 @@ multiplication:
             
             lb      t3, 10(a1)       # t3 = colonna di sparseB a riga J
 
-            bne     t2, t3, target  # if t2 != t3 then target
+            bne     t2, t3, next_iteration  # se i valori delle colonne differiscono then next_iteration
             
             lb      t4, 5(a2)       # t4 = valore della riga I di sparseA
             lb      t3, 5(a1)       # t3 = valore della riga J di sparseB
@@ -41,7 +41,7 @@ multiplication:
             
             la      a0, sparseC     # reinizializzo il puntatore della matrice C
 
-            target: 
+            next_iteration: 
                 addi    t1, t1, 1           # j++ nuova iterazione
                 addi    a1, a1, 1           # passiamo alla riga successiva di sparseB
 

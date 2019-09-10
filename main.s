@@ -1,8 +1,10 @@
 .include "loadMatrix.s"
 .include "transpose.s"
+.include "multiplication.s"
 .global _start
 
 .section .data
+
     matrixA: .byte 0,10,0,12,0,0,0,0,0,0,5,0,15,12,0,0
 
     matrixB: .byte 0,0,8,0,0,0,0,23,0,0,9,0,20,25,0,0
@@ -12,7 +14,6 @@
     
     nColB: .byte 4         # numero colonne B
     nRowB: .byte 4         # numero righe B
-
     
     # creiamo gli array relativi alla colonna, riga e valore
     # di dimensione pari al numero di elementi diversi da zero
@@ -20,8 +21,9 @@
 
     sparseA: .space 15        
 
-
     sparseB: .space 15
+
+    matrixC: .space 16
 
 .section .text
 
@@ -50,6 +52,20 @@ _start:
     
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
 
+    # eseguiamo ora una moltiplicazione tra le due matrici sparse
+    # e otteniamo la matrice completa C
+
+    la      a2, sparseA
+
+    la      a0, matrixC
+
+    lb      a3, nRowA   # numero di righe e colonne 
+    lb      a4, nColB   # della matrice C 
+
+    li      a5, 5        # indica il numero di elementi diversi nella matrice A
+    li      a6, 5       # indica il numero di elementi diversi nella matrice B [da inserire a mano]
+
+    jal     ra, multiplication
 
     li      a7, 93
     ecall   

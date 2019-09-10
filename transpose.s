@@ -11,7 +11,7 @@ transpose:
 
     la      a1, matrixApp
 
-    li      s1, 4      # offset
+    mv      s1, t2      # offset
 
     li      t0, 0      # i = contatore righe 
 
@@ -42,9 +42,7 @@ transpose:
         
         blt     t0, t2, outerloop   # se il contatore righe è minore o uguale al numero delle righe
                                     # esegui una nuova iterazione dell'outerloop
-        
-        beq     zero, zero, local_exit
-
+ 
     local_exit:
         la      a1, matrixApp
         mv      a0, a1

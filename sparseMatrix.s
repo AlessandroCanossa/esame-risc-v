@@ -12,7 +12,7 @@ loadMatrix:
     loop:
         lb      t3, 0(a0)    # carichiamo l'elemento  matrix[i][j]
 
-        beq     t3, zero, ifzero   # if matrix[i][j] == 0
+        beq     t3, zero, target   # if matrix[i][j] == 0
 
         sb      t3, 0(a1)
         sb      t0, 5(a1)
@@ -20,7 +20,7 @@ loadMatrix:
         
         add     a1, a1, s1
 
-        ifzero:
+        target:
             add     a0, a0, s1      # scorro il puntatore al prossimo elemento della matrice
             addi    t6, t6, 1       # contatore ciclo ++
 

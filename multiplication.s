@@ -46,7 +46,7 @@ multiplication:
                 ble     t1, a6, InnerLoop   # se t1 è minore del numero di elementi di sparseB
                                             # esegui un nuovo ciclo di InnerLoop
         
-        la      a1, matrixB     # resettiamo il puntatore di sparseB
+        la      a1, sparseB     # resettiamo il puntatore di sparseB
 
         addi    t0, t0, 1
         addi    a2, a2, 1       # passiamo alla successiva riga di sparseA

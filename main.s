@@ -28,14 +28,18 @@
 .section .text
 
 _start:
+    
+    
     # carico gli indirizzi degli array relativi alla matrice A
     la      a0, matrixA
 
     # carico il numero di elementi di righe e colonne
-    lb      t2, nColA
-    lb      t4, nRowA
+    lb      a2, nColA
+    lb      a3, nRowA
 
     la      a1, sparseA
+
+    li      a5, 5        # indica il numero di elementi diversi nella matrice A
 
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
     
@@ -43,12 +47,14 @@ _start:
     la      a0, matrixB
 
     # carico il numero di elementi di righe e colonne
-    lb      t2, nColB
-    lb      t4, nRowB
+    lb      a2, nColB
+    lb      a3, nRowB
 
     jal     ra, transpose   # calcolo la trasposta di matrixB
 
     la      a1, sparseB
+
+    li      a5, 5       # indica il numero di elementi diversi nella matrice B [da inserire a mano]
     
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
 
@@ -62,7 +68,7 @@ _start:
     lb      a3, nRowA   # numero di righe e colonne 
     lb      a4, nColB   # della matrice C 
 
-    li      a5, 5        # indica il numero di elementi diversi nella matrice A
+    li      a5, 5       # indica il numero di elementi diversi nella matrice A
     li      a6, 5       # indica il numero di elementi diversi nella matrice B [da inserire a mano]
 
     jal     ra, multiplication

@@ -11,7 +11,7 @@ transpose:
 
     la      a1, matrixApp
 
-    mv      s1, t2      # offset
+    mv      s1, a2      # offset
 
     li      t0, 0      # i = contatore righe 
 
@@ -31,7 +31,7 @@ transpose:
 
             addi    a0, a0, 1           # sposta il puntatore di a0 di 1 indirizzo
 
-            blt     t1, t4, innerloop   # se il contatore colonna è minore del numero delle colonne
+            blt     t1, a3, innerloop   # se il contatore colonna è minore del numero delle colonne
                                         # esegui una nuova iterazione dell'innerloop
             
         addi    t0, t0, 1           # aumento contatore righe
@@ -40,7 +40,7 @@ transpose:
 
         add     a1, a1, t0          # sposto il puntatore di matrixApp di un numero di caselle pari a t0
         
-        blt     t0, t2, outerloop   # se il contatore righe è minore o uguale al numero delle righe
+        blt     t0, a2, outerloop   # se il contatore righe è minore o uguale al numero delle righe
                                     # esegui una nuova iterazione dell'outerloop
  
     local_exit:

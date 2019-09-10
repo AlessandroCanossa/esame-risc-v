@@ -7,17 +7,28 @@ multiplication:
     OuterLoop:
         li      t1, 1       # j = 1
         
-        lb      t2, 10(a2)       # t2 = valore della colonna di sparseA a riga I
-        
+        add     a2, a2, a5      # sposto il puntatore di a2 di a5*2 elementi
+        add     a2, a2, a5
+        lb      t2, 0(a2)       # t2 = valore della colonna di sparseA a riga I
+        sub     a2, a2, a5
+        sub     a2, a2, a5      # metto a posto il puntatore
+
         InnerLoop:
-            
-            lb      t3, 10(a1)       # t3 = colonna di sparseB a riga J
+            add     a1, a1, a6
+            add     a1, a1, a6
+            lb      t3, 0(a1)       # t3 = colonna di sparseB a riga J
+            sub     a1, a1, a6
+            sub     a1, a1, a6
 
             bne     t2, t3, next_iteration  # se i valori delle colonne differiscono then next_iteration
             
-            lb      t4, 5(a2)       # t4 = valore della riga I di sparseA
-            lb      t3, 5(a1)       # t3 = valore della riga J di sparseB
-            
+            add     a1, a1, a6
+            add     a2, a2, a5
+            lb      t4, 0(a2)       # t4 = valore della riga I di sparseA
+            lb      t3, 0(a1)       # t3 = valore della riga J di sparseB
+            sub     a1, a1, a6
+            sub     a2, a2, a5
+
             # calcolo l'indice della matrice C nel quale posizionare il numero calcolato
             # utilizzo la seguente formula:  row * nrowC - ncolC + col - 1
             # il meno uno serve per aggiustare gli spostamenti del puntatore

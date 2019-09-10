@@ -68,5 +68,4 @@ _start:
     jal     ra, multiplication
 
     li      a7, 93
-    ecall   
-    
+    ecall  

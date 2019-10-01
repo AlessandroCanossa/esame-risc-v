@@ -3,25 +3,32 @@
 .include "multiplication.s"
 .global _start
 
-.section .data
+.section .rodata
 
     matrixA: .byte 0,10,0,12,0,0,0,0,0,0,5,0,15,12,0,0
 
     matrixB: .byte 0,0,8,0,0,0,0,23,0,0,9,0,20,25,0,0
 
+    elemA: .byte 5         # numero di elementi != 0 in A
+    elemB: .byte 5         # numero di elementi != 0 in B
+    
     nColA: .byte 4         # numero colonne A
     nRowA: .byte 4         # numero righe A
     
     nColB: .byte 4         # numero colonne B
     nRowB: .byte 4         # numero righe B
     
+.section .data
     # creiamo gli array relativi alla colonna, riga e valore
-    # di dimensione pari al numero di elementi diversi da zero
+    # di dimensione pari a tre volte il numero di elementi diversi da zero 
     # [da inserire a tempo di scrittura]
 
     sparseA: .space 15        
 
     sparseB: .space 15
+    
+    # creiamo l'array relativo alla matrice finale con spazio nRowA * nColB
+    # [da inserire a tempo di scrittura]
 
     matrixC: .space 16
 
@@ -39,7 +46,7 @@ _start:
 
     la      a1, sparseA
 
-    li      a5, 5        # indica il numero di elementi diversi nella matrice A
+    lb      a5, elemA       # carico il numero di elementi diversi nella matrice A
 
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
     
@@ -54,7 +61,7 @@ _start:
 
     la      a1, sparseB
 
-    li      a5, 5       # indica il numero di elementi diversi nella matrice B [da inserire a mano]
+    lb      a5, elemB       # carico il numero di elementi diversi nella matrice B
     
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
 
@@ -65,11 +72,11 @@ _start:
 
     la      a0, matrixC
 
-    lb      a3, nRowA   # numero di righe e colonne 
-    lb      a4, nColB   # della matrice C 
+    lb      a3, nRowA       # numero di righe e colonne 
+    lb      a4, nColB       # della matrice C 
 
-    li      a5, 5       # indica il numero di elementi diversi nella matrice A
-    li      a6, 5       # indica il numero di elementi diversi nella matrice B [da inserire a mano]
+    lb      a5, elemA       # indica il numero di elementi diversi nella matrice A
+    lb      a6, elemB       # indica il numero di elementi diversi nella matrice B 
 
     jal     ra, multiplication
 

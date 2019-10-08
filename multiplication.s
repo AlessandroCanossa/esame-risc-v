@@ -50,7 +50,7 @@ multiplication:
 
             sb      t5, 0(a0)       # salvo la somma nella locazione della matrice
             
-            la      a0, sparseC     # reinizializzo il puntatore della matrice C
+            la      a0, matrixC     # reinizializzo il puntatore della matrice C
 
             next_iteration: 
                 addi    t1, t1, 1           # j++ nuova iterazione

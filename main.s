@@ -5,9 +5,15 @@
 
 .section .rodata
 
-    matrixA: .byte 0,10,0,12,0,0,0,0,0,0,5,0,15,12,0,0
+    matrixA: .byte 0 ,10,0 ,12
+             .byte 0 ,0 ,0 ,0
+             .byte 0 ,0 ,5 ,0
+             .byte 15,12,0 ,0
 
-    matrixB: .byte 0,0,8,0,0,0,0,23,0,0,9,0,20,25,0,0
+    matrixB: .byte 0 ,0 ,8 ,0
+             .byte 0 ,0 ,0 ,23
+             .byte 0 ,0 ,9 ,0
+             .byte 20,25,0 ,0
 
     elemA: .byte 5         # numero di elementi != 0 in A
     elemB: .byte 5         # numero di elementi != 0 in B
@@ -37,7 +43,7 @@
 _start:
     
     
-    # carico gli indirizzi degli array relativi alla matrice A
+    # carico la matrice A
     la      a0, matrixA
 
     # carico il numero di elementi di righe e colonne
@@ -50,7 +56,7 @@ _start:
 
     jal     ra, loadMatrix  # jump to loadMatrix and save position to ra
     
-    # carico gli indirizzi degli array relativi alla matrice B
+    # carico la matrice B
     la      a0, matrixB
 
     # carico il numero di elementi di righe e colonne

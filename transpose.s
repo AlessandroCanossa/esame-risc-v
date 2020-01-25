@@ -27,7 +27,7 @@ transpose:
 
             addi    t1, t1, 1           # aumento contatore colonne
 
-            add     a1, a1, s1          # sposta il puntatore di a1 di 4 indirizzi
+            add     a1, a1, s1          # sposta il puntatore di a1 di s1 indirizzi
 
             addi    a0, a0, 1           # sposta il puntatore di a0 di 1 indirizzo
 

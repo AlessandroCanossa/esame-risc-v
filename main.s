@@ -1,27 +1,31 @@
+#.include "print.s"
 .include "loadMatrix.s"
 .include "transpose.s"
 .include "multiplication.s"
+
+.equ _SYS_WR, 64
+
 .global _start
+
 
 .section .rodata
 
-    matrixA: .byte 0 ,10,0 ,12
-             .byte 0 ,0 ,0 ,0
-             .byte 0 ,0 ,5 ,0
-             .byte 15,12,0 ,0
+    matrixA: .byte 5 ,0,0 ,2
+             .byte 0 ,7 ,0 ,0
+             .byte 0 ,0 ,0 ,3
 
-    matrixB: .byte 0 ,0 ,8 ,0
-             .byte 0 ,0 ,0 ,23
-             .byte 0 ,0 ,9 ,0
-             .byte 20,25,0 ,0
+    matrixB: .byte 0 ,0 ,4
+             .byte 0 ,2 ,0
+             .byte 0 ,0 ,7
+             .byte 10,0 ,0
 
-    elemA: .byte 5         # numero di elementi != 0 in A
-    elemB: .byte 5         # numero di elementi != 0 in B
+    elemA: .byte 4         # numero di elementi != 0 in A
+    elemB: .byte 4         # numero di elementi != 0 in B
     
     nColA: .byte 4         # numero colonne A
-    nRowA: .byte 4         # numero righe A
+    nRowA: .byte 3         # numero righe A
     
-    nColB: .byte 4         # numero colonne B
+    nColB: .byte 3         # numero colonne B
     nRowB: .byte 4         # numero righe B
     
 .section .data
@@ -29,19 +33,18 @@
     # di dimensione pari a tre volte il numero di elementi diversi da zero 
     # [da inserire a tempo di scrittura]
 
-    sparseA: .space 15        
+    sparseA: .space 12        
 
-    sparseB: .space 15
+    sparseB: .space 12
     
     # creiamo l'array relativo alla matrice finale con spazio nRowA * nColB
     # [da inserire a tempo di scrittura]
 
-    matrixC: .space 16
+    matrixC: .space 9
 
 .section .text
-
 _start:
-    
+#main:
     
     # carico la matrice A
     la      a0, matrixA
@@ -60,8 +63,8 @@ _start:
     la      a0, matrixB
 
     # carico il numero di elementi di righe e colonne
-    lb      a2, nColB
-    lb      a3, nRowB
+    lb      a2, nRowB
+    lb      a3, nColB
 
     jal     ra, transpose   # calcolo la trasposta di matrixB
 
@@ -75,6 +78,11 @@ _start:
     # e otteniamo la matrice completa C
 
     la      a2, sparseA
+    la      a1, sparseB
+
+    #li s10, 15
+    #la s2, sparseA
+    #jal ra, print
 
     la      a0, matrixC
 
@@ -86,5 +94,9 @@ _start:
 
     jal     ra, multiplication
 
+    #la s2, matrixC
+    #li s10, 16
+    #jal ra, print
+    
     li      a7, 93
     ecall  
